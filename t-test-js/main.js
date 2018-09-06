@@ -19,6 +19,8 @@ fcsv.fromStream(stream, { headers: true })
 
 const mean = d => d.reduce((acc, curr) => acc + curr) / d.length;
 
+// I am getting a different value here
+// this is where the problem is
 const stdDev = d => {
     // get mean
     const mean_d = mean(d);
@@ -31,17 +33,29 @@ const stdDev = d => {
     );
 
     // divide numerator by the length of the array - 1 
-    const res = Math.sqrt(numerator/(d.length-1));
+    const res = Math.sqrt(numerator / (d.length - 1));
 
     return res;
 }
 
-array1 = [1,2,3,4,5]
-console.log(stdDev(array1));
+const twoSampleTTest = (a, b) => {
+    const count_a = a.length;
+    const count_b = b.length;
+    const numerator = Math.abs(mean(a) - mean(b));
+    const a_denom = stdDev(a) / count_a;
+    const b_denom = stdDev(b) / count_b;
+    const denominator = Math.sqrt(a_denom + b_denom);
+    const dof = count_a + count_b - 2;
+    const tScore = numerator / denominator;
 
-//console.log(array1.reduce((acc, curr) => acc + curr))
-/*
-console.log(array1.reduce((acc, curr) => acc + curr));
-console.log(mean(array1));
-*/
+    // getting a different answer than one written in python
+    // why?
+    return { 'T Score': tScore, 'dof': dof };
+}
 
+
+array1 = [1, 2, 3, 4, 5];
+array2 = [3, 4, 5, 6, 7];
+
+//console.log(twoSampleTTest(array1, array2));
+console.log(stdDev(array1))
