@@ -1,0 +1,22 @@
+{
+  "name": "t-test-study",
+  "version": "1.0.0",
+  "description": "I created a fake dataset for 10 males and 10 females by looking at csv files with heights by gender that I found on internet.",
+  "main": "t-test-js/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patcurry/t-test-study.git"
+  },
+  "author": "Pat Curry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/patcurry/t-test-study/issues"
+  },
+  "homepage": "https://github.com/patcurry/t-test-study#readme",
+  "dependencies": {
+    "fast-csv": "^2.4.1"
+  }
+}
