@@ -21,6 +21,7 @@ int main()
 */
 
 // another program from the internet
+// https://www.programiz.com/c-programming/c-arrays-functions
 float average(float age[]);
 
 int main()
