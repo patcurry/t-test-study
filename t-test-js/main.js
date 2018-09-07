@@ -55,8 +55,10 @@ const twoSampleTTest = (a, b) => {
     return { 'T Score': tScore, 'dof': dof };
 }
 
+// test the t-test
+// the answer should be {'T Score': 2.514866859365871, 'dof': 8}
+
 array1 = [1, 2, 3, 4, 5];
 array2 = [3, 4, 5, 6, 7];
 
 console.log(twoSampleTTest(array1, array2));
-console.log(stdDev(array1))
