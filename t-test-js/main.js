@@ -1,23 +1,8 @@
 const fs = require('fs');
 const fcsv = require('fast-csv');
 
-// get file data and stream it
-const inputFile = './height-data.csv';
-const stream = fs.createReadStream(inputFile);
-
-// make empty object to hold the data
-const heightData = [];
-
-// add height data to heightData object
-// this is asynchronous and therefore obnoxious
-fcsv.fromStream(stream, { headers: true })
-    .on('data', data => heightData.push(data))
-    .on('end', () => heightData);
-
-// now this whole thing has to work on sort of a promises or async-await
-// type framework
-
-// The math is here. I just need to apply it to the data now.
+// before getting the file and dealing with it
+// define all the math functions
 const mean = d => d.reduce((acc, curr) => acc + curr) / d.length;
 
 const sampleStdDevDenom = d => d.reduce((acc, curr) => acc + curr) / (d.length - 1);
@@ -58,7 +43,72 @@ const twoSampleTTest = (a, b) => {
 // test the t-test
 // the answer should be {'T Score': 2.514866859365871, 'dof': 8}
 
-array1 = [1, 2, 3, 4, 5];
-array2 = [3, 4, 5, 6, 7];
+// array1 = [1, 2, 3, 4, 5];
+// array2 = [3, 4, 5, 6, 7];
 
-console.log(twoSampleTTest(array1, array2));
+// console.log(twoSampleTTest(array1, array2));
+
+// now get the file data, stream it, parse it, then run the functions on it
+const inputFile = './height-data.csv';
+const stream = fs.createReadStream(inputFile);
+
+// empty object to hold data
+//const heightData = [];
+
+
+// add height data to heightData object
+// this is asynchronous and therefore obnoxious
+// it would be nice to make it into a promise
+
+// now this whole thing has to work on sort of a promises or async-await
+// type framework
+
+// make fcsv function into promis
+/*
+function getCSVData() {
+    const heightData = [];
+    return new Promise(resolve => {
+        resolve(fcsv.fromStream(stream, { headers: true })
+            .on('data', data => {
+                heightData.push(data)
+                return heightData;
+            })
+            .on('end', () => heightData)
+        );
+    });
+}
+
+getCSVData().then(x => console.log(x))
+*/
+var dataPromise = new Promise( resolve => {
+    const heightData = [];
+    fcsv.fromStream(stream, {headers:true})
+    .on('data', data => {
+        heightData.push(data)
+        return heightData;
+    })
+    .on('end', () => {
+        const maleHeights = heightData.map(x => parseInt(x.male));
+        const femaleHeights = heightData.map(x => parseInt(x.female));
+        const result = twoSampleTTest(maleHeights, femaleHeights)
+        console.log(result);
+    })
+});
+
+
+/*
+const expected = [{ male: '188', female: '157' },
+{ male: '172', female: '175' },
+{ male: '177', female: '167' },
+{ male: '183', female: '167' },
+{ male: '180', female: '164' },
+{ male: '183', female: '170' },
+{ male: '175', female: '165' },
+{ male: '183', female: '160' },
+{ male: '190', female: '167' },
+{ male: '178', female: '172' }];
+
+const maleHeights = expected.map(x => parseInt(x.male));
+const femaleHeights = expected.map(x => parseInt(x.female));
+console.log(twoSampleTTest(maleHeights, femaleHeights));
+*/
