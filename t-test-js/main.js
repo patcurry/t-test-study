@@ -17,45 +17,46 @@ fcsv.fromStream(stream, { headers: true })
 // now this whole thing has to work on sort of a promises or async-await
 // type framework
 
+// The math is here. I just need to apply it to the data now.
 const mean = d => d.reduce((acc, curr) => acc + curr) / d.length;
 
-// I am getting a different value here
-// this is where the problem is
-const stdDev = d => {
+const sampleStdDevDenom = d => d.reduce((acc, curr) => acc + curr) / (d.length - 1);
+
+const squareDiffs = d => {
     // get mean
-    const mean_d = mean(d);
+    // use map to subtract values and mean
+    // then square the result
+    // then return the results as a list 
+    const avg = mean(d);
+    return d.map(val => {
+        const diff = val - avg;
+        return diff * diff;
+    });
+}
 
-    // acc is accumulator and curr is current
-    // subtract the mean from the current value, square it
-    // and add it to the accumulator
-    const numerator = d.reduce(
-        (acc, curr) => acc + Math.pow(curr - mean_d, 2)
-    );
-
-    // divide numerator by the length of the array - 1 
-    const res = Math.sqrt(numerator / (d.length - 1));
-
+const stdDev = d => {
+    /*
+    const sd = squareDiffs(d);
+    const MSD = sampleStdDevDenom(sd);
+    const res = Math.sqrt(MSD);
     return res;
+    */
+    // oneline
+    return Math.sqrt(sampleStdDevDenom(squareDiffs(d)));
 }
 
 const twoSampleTTest = (a, b) => {
-    const count_a = a.length;
-    const count_b = b.length;
     const numerator = Math.abs(mean(a) - mean(b));
-    const a_denom = stdDev(a) / count_a;
-    const b_denom = stdDev(b) / count_b;
+    const a_denom = stdDev(a) / a.length;
+    const b_denom = stdDev(b) / b.length;
     const denominator = Math.sqrt(a_denom + b_denom);
-    const dof = count_a + count_b - 2;
+    const dof = a.length + b.length - 2;
     const tScore = numerator / denominator;
-
-    // getting a different answer than one written in python
-    // why?
     return { 'T Score': tScore, 'dof': dof };
 }
-
 
 array1 = [1, 2, 3, 4, 5];
 array2 = [3, 4, 5, 6, 7];
 
-//console.log(twoSampleTTest(array1, array2));
+console.log(twoSampleTTest(array1, array2));
 console.log(stdDev(array1))
