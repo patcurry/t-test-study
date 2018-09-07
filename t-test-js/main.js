@@ -52,35 +52,8 @@ const twoSampleTTest = (a, b) => {
 const inputFile = './height-data.csv';
 const stream = fs.createReadStream(inputFile);
 
-// empty object to hold data
-//const heightData = [];
-
-
-// add height data to heightData object
-// this is asynchronous and therefore obnoxious
-// it would be nice to make it into a promise
-
-// now this whole thing has to work on sort of a promises or async-await
-// type framework
-
-// make fcsv function into promis
-/*
-function getCSVData() {
-    const heightData = [];
-    return new Promise(resolve => {
-        resolve(fcsv.fromStream(stream, { headers: true })
-            .on('data', data => {
-                heightData.push(data)
-                return heightData;
-            })
-            .on('end', () => heightData)
-        );
-    });
-}
-
-getCSVData().then(x => console.log(x))
-*/
-var dataPromise = new Promise( resolve => {
+// I don't really like this method. Promises seriously confuse me.
+const dataPromise = new Promise( resolve => {
     const heightData = [];
     fcsv.fromStream(stream, {headers:true})
     .on('data', data => {
@@ -94,7 +67,6 @@ var dataPromise = new Promise( resolve => {
         console.log(result);
     })
 });
-
 
 /*
 const expected = [{ male: '188', female: '157' },
