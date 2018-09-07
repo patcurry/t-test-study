@@ -27,9 +27,10 @@ def sampleStdDevDenom(d):
     of dividing by the length, we divide by the length
     minus 1
     """
-    f = lambda a, b: a + b
-    array_sum = reduce(f, d)
-    return array_sum / len(d) - 1
+    sum = lambda a, b: a + b
+    array_sum = reduce(sum, d)
+    result = array_sum / (len(d) - 1)
+    return result
 
 def squareDiffs(d):
     """
@@ -55,7 +56,6 @@ def std_dev(d):
     sd = squareDiffs(d)
     MSD = sampleStdDevDenom(sd)
     res = sqrt(MSD)
-    print(res)
     return res
 
 def two_sample_t_test(a, b):
@@ -74,9 +74,12 @@ def two_sample_t_test(a, b):
     # why?
     return res
 
+"""
 answer = two_sample_t_test(df['male'], df['female'])
+print(answer)
+"""
 
 array1 = [1, 2, 3, 4, 5]
 array2 = [3, 4, 5, 6, 7]
 
-#print(std_dev(array1))
+print(two_sample_t_test(array1, array2))
