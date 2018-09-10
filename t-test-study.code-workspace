@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "scala-t-test"
 		}
 	],
 	"settings": {
