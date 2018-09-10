@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/patcurry/t-test-study#readme",
   "dependencies": {
-    "fast-csv": "^2.4.1"
+    "fast-csv": "^2.4.1",
+    "package.json": "^2.0.1"
   }
 }

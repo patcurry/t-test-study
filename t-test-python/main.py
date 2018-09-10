@@ -6,7 +6,7 @@ from math import sqrt
 # each with ten values
 df = pd.read_csv('./height-data.csv', skipinitialspace=True)
 
-print(type(df))
+# print(type(df))
 #
 # get a t score by subtracting the mean of the males and the mean of the females from each other
 # then divide by the pooled standard deviation times the square root of 1 over n of males plus 1 over
