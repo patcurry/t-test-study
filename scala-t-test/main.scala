@@ -58,16 +58,12 @@ object Main extends App {
 
   val iter = bufferedSource.getLines().drop(1).map(_.split(",").map(_.trim))
   val males = iter.map(col => col(0)).toList
-  val females = iter.map(col => col(1))//.toList
-
-    for (f <- females) {
-        println(f)
-    }
-
+  val females = iter.map(col => col(1)).toList
   bufferedSource.close
 
-  //val ttest = new TTest(males, females)
-  //println(ttest.tTestResult)
+
+  val ttest = new TTest(males, females)
+  println(ttest.tTestResult)
 
   // fake data
   // don't know the difference between Arrays and Lists => lists are immutable
