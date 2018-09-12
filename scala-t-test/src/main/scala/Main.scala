@@ -2,14 +2,12 @@ import scala.math.abs
 import scala.math.pow
 import scala.math.sqrt
 
-object Main extends App {
 
-  // is there any reason I would break things into classes?
+class TTest(val a: List[Double], val b: List[Double]) {
 
-  // the syntax seems pretty easy for all of these
-  // it's definitely terse.
   def mean(d:List[Double]):Double = d.reduce(_+_) / d.length
-  
+
+
   def sampleStdDevDenom(d:List[Double]):Double = d.reduce(_+_) / (d.length - 1)
 
   def squareDiffs(d:List[Double]):List[Double] = d.map(v => pow((v - mean(d)), 2))
@@ -26,6 +24,11 @@ object Main extends App {
     val tScore = numerator / denominator
     return Map("T Score" -> tScore, "dof" -> dof) 
   }
+  
+
+}
+
+object Main extends App {
 
   // fake data
   // don't know the difference between Arrays and Lists => lists are immutable
@@ -36,7 +39,8 @@ object Main extends App {
   val array1 = List(1.0,2.0,3.0,4.0,5.0)
   val array2 = List(3.0,4.0,5.0,6.0,7.0)
 
+  val ttest = new TTest(array1, array2)
 
-
-  println(twoSampleTTest(array1, array2))
+  println(ttest.a)
+  println(ttest.b)
 }
