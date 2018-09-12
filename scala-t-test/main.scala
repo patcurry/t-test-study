@@ -52,12 +52,12 @@ object CSVDemo extends App {
 
 object Main extends App {
 
-  //def parseDouble(s: String) = try { Some(s.toDouble) } catch { case _ => None }
+  def parseDouble(s: String) = try { Some(s.toDouble) } catch { case _ => None }
 
   val bufferedSource = io.Source.fromFile("./height-data.csv")
 
   val iter = bufferedSource.getLines().drop(1).map(_.split(",").map(_.trim))
-  val males = iter.map(col => col(0)).toList
+  val males = iter.map(col => parseDouble(col(0))).map(v => v.getOrElse(0)).toList
   val females = iter.map(col => col(1)).toList
   bufferedSource.close
 
