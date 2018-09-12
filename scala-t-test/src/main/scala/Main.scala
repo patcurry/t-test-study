@@ -3,10 +3,9 @@ import scala.math.pow
 import scala.math.sqrt
 
 
-class TTest(val a: List[Double], val b: List[Double]) {
+class TTest(val x: List[Double], val y: List[Double]) {
 
   def mean(d:List[Double]):Double = d.reduce(_+_) / d.length
-
 
   def sampleStdDevDenom(d:List[Double]):Double = d.reduce(_+_) / (d.length - 1)
 
@@ -14,6 +13,7 @@ class TTest(val a: List[Double], val b: List[Double]) {
   
   def stdDev(d:List[Double]):Double = sqrt(sampleStdDevDenom(squareDiffs(d)))
 
+  // this is where I define the method
   def twoSampleTTest(a:List[Double], b:List[Double]):Map[String, Double] = {
     // probably all of these little functions could be broken up
     val numerator = abs(mean(a) - mean(b))
@@ -25,6 +25,8 @@ class TTest(val a: List[Double], val b: List[Double]) {
     return Map("T Score" -> tScore, "dof" -> dof) 
   }
   
+  // this is where i call the method and return it from the class
+  def tTestResult = twoSampleTTest(x,y)
 
 }
 
@@ -41,6 +43,8 @@ object Main extends App {
 
   val ttest = new TTest(array1, array2)
 
-  println(ttest.a)
-  println(ttest.b)
+  // there's something wrong here why do i have to call the t test method and
+  // specify the two values I instantiated the class with?
+  //println(ttest.twoSampleTTest(ttest.a,ttest.b))
+  println(ttest.tTestResult)
 }
