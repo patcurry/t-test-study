@@ -26,7 +26,6 @@ class TTest:
         result = array_sum/len(a)
         return result
 
-
     def sampleStdDevDenom(self, a):
         """
         basically the function above (mean) but instead
