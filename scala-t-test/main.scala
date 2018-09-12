@@ -2,6 +2,8 @@ import scala.math.abs
 import scala.math.pow
 import scala.math.sqrt
 
+// why am I using sbt?
+// why not just use scala with a small scala script file?
 
 class TTest(val x: List[Double], val y: List[Double]) {
 
