@@ -32,7 +32,42 @@ class TTest(val x: List[Double], val y: List[Double]) {
 
 }
 
+/*
+object CSVDemo extends App {
+    val bufferedSource = io.Source.fromFile("./height-data.csv")
+
+    val iter = bufferedSource.getLines().drop(1).map(_.split(",").map(_.trim))
+    val males = iter.map(col => col(0)) // so is this a list?
+    val females = iter.map(col => col(1))
+
+    // so now that I have the data, how do I use the methods on it?
+
+    for (f <- females) {
+        println(f)
+    }
+
+    bufferedSource.close
+}
+*/
+
 object Main extends App {
+
+  //def parseDouble(s: String) = try { Some(s.toDouble) } catch { case _ => None }
+
+  val bufferedSource = io.Source.fromFile("./height-data.csv")
+
+  val iter = bufferedSource.getLines().drop(1).map(_.split(",").map(_.trim))
+  val males = iter.map(col => col(0)).toList
+  val females = iter.map(col => col(1))//.toList
+
+    for (f <- females) {
+        println(f)
+    }
+
+  bufferedSource.close
+
+  //val ttest = new TTest(males, females)
+  //println(ttest.tTestResult)
 
   // fake data
   // don't know the difference between Arrays and Lists => lists are immutable
@@ -40,13 +75,11 @@ object Main extends App {
   // test the t-test
   // the answer should be {'T Score': 2.514866859365871, 'dof': 8}
 
+  /*
   val array1 = List(1.0,2.0,3.0,4.0,5.0)
   val array2 = List(3.0,4.0,5.0,6.0,7.0)
 
   val ttest = new TTest(array1, array2)
-
-  // there's something wrong here why do i have to call the t test method and
-  // specify the two values I instantiated the class with?
-  //println(ttest.twoSampleTTest(ttest.a,ttest.b))
   println(ttest.tTestResult)
+  */
 }
