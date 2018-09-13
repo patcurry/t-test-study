@@ -7,9 +7,11 @@ import scala.math.sqrt
 
 class TTest(val x: List[Double], val y: List[Double]) {
 
-  def mean(d:List[Double]):Double = d.reduce(_+_) / d.length
+  //def mean(d:List[Double]):Double = d.reduce(_+_) / d.length
+  def mean(d:List[Double]):Double = d.foldLeft(_+_) / d.length
 
-  def sampleStdDevDenom(d:List[Double]):Double = d.reduce(_+_) / (d.length - 1)
+  //def sampleStdDevDenom(d:List[Double]):Double = d.reduce(_+_) / (d.length - 1)
+  def sampleStdDevDenom(d:List[Double]):Double = d.foldLeft(_+_) / (d.length - 1)
 
   def squareDiffs(d:List[Double]):List[Double] = d.map(v => pow((v - mean(d)), 2))
   
@@ -18,10 +20,9 @@ class TTest(val x: List[Double], val y: List[Double]) {
   // this is where I define the method
   def twoSampleTTest(a:List[Double], b:List[Double]):Map[String, Double] = {
     // probably all of these little functions could be broken up
+    // or just put into one long thing
     val numerator = abs(mean(a) - mean(b))
-    val a_denom = stdDev(a) / a.length
-    val b_denom = stdDev(b) / b.length
-    val denominator = sqrt(a_denom + b_denom)
+    val denominator = sqrt((stdDev(a)/a.length) + (stdDev(b)/b.length))
     val dof = a.length + b.length - 2
     val tScore = numerator / denominator
     return Map("T Score" -> tScore, "dof" -> dof) 
@@ -29,7 +30,6 @@ class TTest(val x: List[Double], val y: List[Double]) {
   
   // this is where i call the method and return it from the class
   def tTestResult = twoSampleTTest(x,y)
-
 }
 
 /*
@@ -57,8 +57,9 @@ object Main extends App {
   val bufferedSource = io.Source.fromFile("./height-data.csv")
 
   val iter = bufferedSource.getLines().drop(1).map(_.split(",").map(_.trim))
-  val males = iter.map(col => parseDouble(col(0))).map(v => v.getOrElse(0)).toList
-  val females = iter.map(col => col(1)).toList
+  val males = iter.map(col => parseDouble(col(0))).map(v => v.getOrElse(0).asInstanceOf[Double]).toList
+  val females = iter.map(col => parseDouble(col(1))).map(v => v.getOrElse(0).asInstanceOf[Double]).toList
+  //val females = iter.map(col => col(1)).toList
   bufferedSource.close
 
 
