@@ -7,11 +7,11 @@ import scala.math.sqrt
 
 class TTest(val x: List[Double], val y: List[Double]) {
 
-  //def mean(d:List[Double]):Double = d.reduce(_+_) / d.length
-  def mean(d:List[Double]):Double = d.foldLeft(_+_) / d.length
+  def mean(d:List[Double]):Double = d.reduce(_+_) / d.length
+  //def mean(d:List[Double]):Double = d.foldLeft(_+_) / d.length
 
-  //def sampleStdDevDenom(d:List[Double]):Double = d.reduce(_+_) / (d.length - 1)
-  def sampleStdDevDenom(d:List[Double]):Double = d.foldLeft(_+_) / (d.length - 1)
+  def sampleStdDevDenom(d:List[Double]):Double = d.reduce(_+_) / (d.length - 1)
+  //def sampleStdDevDenom(d:List[Double]):Double = d.foldLeft(_+_) / (d.length - 1)
 
   def squareDiffs(d:List[Double]):List[Double] = d.map(v => pow((v - mean(d)), 2))
   
