@@ -11,14 +11,15 @@ double mean(double d[], int size)
     double sum = 0;
     double avg;
 
-    // for each
     for (i = 0; i < size; i++) {
         sum += d[i];
     }
-    avg = double(sum) / size;
+    avg = sum / size;
 
     return avg;
 }
+
+
 
 // main program
 int main()
