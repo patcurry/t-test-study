@@ -12,81 +12,75 @@ df = pd.read_csv('./height-data.csv', skipinitialspace=True)
 # where the pooled standard deviation is
 # t = absolute_value(male_mean - female_mean) / sqrt(std_dev_m/nm + std_dev_f/nf)
 
-# how would I put all this stuff into a class?
-# would I want to do that in the first place?
-# probably not
+class TTest:
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def sum(self, a, b): 
+        return a + b
+
+    def mean(self, a):
+        array_sum = reduce(self.sum, a)
+        result = array_sum/len(a)
+        return result
 
 
-def mean(d):
-    """
-    A bit more functional style programming.
-    """
-    def sum(a, b): return a + b
-    array_sum = reduce(sum, d)
-    result = array_sum/len(d)
-    return result
+    def sampleStdDevDenom(self, a):
+        """
+        basically the function above (mean) but instead
+        of dividing by the length, we divide by the length
+        minus 1
+        """
+        array_sum = reduce(self.sum, a)
+        result = array_sum / (len(a) - 1)
+        return result
+
+    def squareDiffs(self, d):
+        """
+        map the function a - b over the array d
+        where a is the value in the array and b is
+        the average of d, then return the square
+        of the difference between the value and
+        the average
+        """
+        return list(map(lambda a: (a - self.mean(d))**2, d))
 
 
-def sampleStdDevDenom(d):
-    """
-    basically the function above (mean) but instead
-    of dividing by the length, we divide by the length
-    minus 1
-    """
-    def sum(a, b): return a + b
-    array_sum = reduce(sum, d)
-    result = array_sum / (len(d) - 1)
-    return result
+    def std_dev(self, d):
+        """
+        subtract each value in the sample from the sample mean
+        then square the result
+        take the sum of the results and divide it by the
+        one less than the sample count 
+        """
+        sd = self.squareDiffs(d)
+        MSD = self.sampleStdDevDenom(sd)
+        return sqrt(MSD)
 
 
-def squareDiffs(d):
-    """
-    map the function a - b over the array d
-    where a is the value in the array and b is
-    the average of d, then return the square
-    of the difference between the value and
-    the average
-    """
-    avg = mean(d)
+    def two_sample_t_test(self, a, b):
+        numerator = abs(self.mean(a) - self.mean(b))
+        a_denom = self.std_dev(a) / len(a)
+        b_denom = self.std_dev(b) / len(b)
+        denominator = sqrt(a_denom + b_denom)
+        dof = len(a) + len(b) - 2
+        t_score = numerator / denominator
+        return {'T Score': t_score, 'dof': dof}
 
-    def f(a): return (a - avg) ** 2
-    res = list(map(f, d))
-    return res
-    # return list(map(lambda a, b: (a - b)**2, d, avg))
+    def ttest_result(self):
+        return self.two_sample_t_test(self.x, self.y)
 
 
-def std_dev(d):
-    """
-    subtract each value in the sample from the sample mean
-    then square the result
-    take the sum of the results and divide it by the
-    one less than the sample count 
-    """
-    sd = squareDiffs(d)
-    MSD = sampleStdDevDenom(sd)
-    res = sqrt(MSD)
-    return res
-
-
-def two_sample_t_test(a, b):
-    numerator = abs(mean(a) - mean(b))
-    a_denom = std_dev(a) / len(a)
-    b_denom = std_dev(b) / len(b)
-    denominator = sqrt(a_denom + b_denom)
-    dof = len(a) + len(b) - 2
-    t_score = numerator / denominator
-    res = {'T Score': t_score, 'dof': dof}
-
-    return res
-
-
-answer = two_sample_t_test(df['male'], df['female'])
-print(answer)
+class_answer = TTest(df['male'], df['female'])
+print(class_answer.ttest_result())
 
 # test the t-test
 # the answer should be {'T Score': 2.514866859365871, 'dof': 8}
 #
-# array1 = [1, 2, 3, 4, 5]
-# array2 = [3, 4, 5, 6, 7]
-#
-# print(two_sample_t_test(array1, array2))
+#array1 = [1, 2, 3, 4, 5]
+#array2 = [3, 4, 5, 6, 7]
+
+#yeah = TTest(array1, array2)
+#print(yeah.ttest_result())
