@@ -22,6 +22,7 @@ int main()
 
 // another program from the internet
 // https://www.programiz.com/c-programming/c-arrays-functions
+/*
 float average(float age[]);
 
 int main()
@@ -41,4 +42,47 @@ float average(float age[])
     }
     avg = (sum / 6);
     return avg;
+}
+*/
+
+//float average(float nums[]);
+
+/*
+double findSumIter(double nums[], int n)
+{
+    if (n <= 0) {
+        return 0;
+    }
+    return (findSumIter(nums, n - 1) + nums[n - 1]);
+}
+
+double findSum(double nums[])
+{
+    int n; 
+    n = sizeof(nums)/sizeof(nums[0]);
+    return findSumIter(nums, n);
+}
+*/
+
+// I have to do this in the 'main' program
+// it will not work in a function!
+int count(double arr[])
+{
+    int n;
+    n = sizeof(arr) / sizeof(arr[0]);
+    return n;
+}
+
+int main()
+{
+    double nums[] = {1.5, 1.5, 1.5, 1.5, 1.5, 1.5};
+    //int l = 6;
+    //double avg = findSumIter(age, l);
+    //printf("hey\n");
+    //double avg = findSum(age);
+    //printf("%.2f", avg);
+    int n;
+    n = count(nums); //sizeof(nums)/sizeof(nums[0]);
+    printf("%d\n", n);
+    return 0;
 }
