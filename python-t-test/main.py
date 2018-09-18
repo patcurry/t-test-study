@@ -17,6 +17,8 @@ df = pd.read_csv('./height-data.csv', skipinitialspace=True)
 # probably not
 
 
+
+
 def mean(d):
     """
     A bit more functional style programming.
