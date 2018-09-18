@@ -47,42 +47,36 @@ float average(float age[])
 
 //float average(float nums[]);
 
-/*
-double findSumIter(double nums[], int n)
+
+double findSum(double arr[], int n)
 {
-    if (n <= 0) {
-        return 0;
+    double sum = 0.0;
+    int i = 0;
+    while (i < n)
+    {
+        sum = sum + arr[i];
+        printf("number: %.2f\n", arr[i]);
+        printf("count: %d\n", i);
+        printf("sum: %.2f\n", sum);
+        i++;
     }
-    return (findSumIter(nums, n - 1) + nums[n - 1]);
+    return sum;
 }
 
-double findSum(double nums[])
-{
-    int n; 
-    n = sizeof(nums)/sizeof(nums[0]);
-    return findSumIter(nums, n);
-}
-*/
 
 // I have to do this in the 'main' program
 // it will not work in a function!
-int count(double arr[])
-{
-    int n;
-    n = sizeof(arr) / sizeof(arr[0]);
-    return n;
-}
 
 int main()
 {
     double nums[] = {1.5, 1.5, 1.5, 1.5, 1.5, 1.5};
-    //int l = 6;
+    int count = sizeof(nums) / sizeof(nums[0]);
     //double avg = findSumIter(age, l);
     //printf("hey\n");
     //double avg = findSum(age);
     //printf("%.2f", avg);
-    int n;
-    n = count(nums); //sizeof(nums)/sizeof(nums[0]);
-    printf("%d\n", n);
+    double sum = findSum(nums, count);
+
+    printf("%d\n", sum);
     return 0;
 }
