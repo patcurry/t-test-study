@@ -1,24 +1,25 @@
 #include <iostream>
+#include <iterator>
+#include <numeric>
 
 using namespace std;
 
 // write the math first
 // how do I pass an array into here?
-double mean(double d[], int size)
+/*
+        << std::accumulate(std::begin(nums),
+                           std::end(nums),
+                           0.0)
+                           */
+
+
+// how do I get length of the array?
+double mean(double nums[])
 {
-    // declare variables
-    int i;
-    double sum = 0;
-    double avg;
-
-    for (i = 0; i < size; i++) {
-        sum += d[i];
-    }
-    avg = sum / size;
-
-    return avg;
+      return std::accumulate(std::begin(nums),
+                             std::end(nums),
+                             0.0);
 }
-
 
 
 // main program
@@ -27,8 +28,22 @@ int main()
     double test[5] = {12.1, 14.0, 16.4, 18.3, 19.9};
     double avg;
 
-    avg = mean( test, 5 );
+    avg = mean(test);
 
     cout << avg << endl;
     return 0;
 }
+
+
+
+/*
+int main()
+{
+    double nums[] = {1.1,5.2,3.0,2.8,7.9,8.4,100.49,3.0};
+    std::cout
+        << std::accumulate(std::begin(nums),
+                           std::end(nums),
+                           0.0)
+        << '\n';
+}
+*/
