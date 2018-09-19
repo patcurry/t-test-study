@@ -62,9 +62,23 @@ object Main extends App {
 
   bufferedSource.close
 
+  //println("males: ", males) // this happens before the reduceLeft error, which means that the reduce left error is happening
+  //println("females: ", females) // in the math section.
 
-  val ttest = new TTest(males, females)
-  println(ttest.tTestResult)
+  for (m <- males) {
+    println(m)
+  }
+
+  // this is empty
+  for (f <- females) {
+      println(f)
+  } 
+
+
+  // the females list is empty
+
+  //val ttest = new TTest(males, females)
+  //println(ttest.tTestResult)
 
   // fake data
   // don't know the difference between Arrays and Lists => lists are immutable
