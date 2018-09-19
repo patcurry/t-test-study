@@ -31,7 +31,27 @@ class TTest(val x: List[Double], val y: List[Double]) {
   def tTestResult = twoSampleTTest(x,y)
 }
 
+// I should be testing this as I go
+/*
+class GetDataCSV(val fileName: String) {
 
+  def getBufferedSource(fn: String): Source = io.Source.fromFile(fileName)
+
+  // going to cheat here, this will be specific to this particular file
+  // I don't think this returns a list
+  def getColumnData(val src: Source):List[Double] = {
+    // get lines, then drop header line, then split by commas and trim spaces
+    return src.getLines().drop(1).map(_.split(",").map(_.trim))
+  }
+
+  def turnColumnDataToList(val lst: List[Double]):List[Double] = {
+
+  }
+}
+*/
+
+// can I put all this stuff into a class?
+/*
 object CSVDemo extends App {
     val bufferedSource = io.Source.fromFile("./height-data.csv")
 
@@ -43,32 +63,60 @@ object CSVDemo extends App {
 
     // so now that I have the data, how do I use the methods on it?
 
-    /*
+    
     for (col <- iter) println("male", col(0));
     for (col <- iter) println("female", col(1));
-    */
+    
+
+    //println(iter.getClass)
 
     bufferedSource.close
 }
+*/
 
-/*
 object Main extends App {
 
-  def parseDouble(s: String) = try { Some(s.toDouble) } catch { case _ : Throwable => None }
+  //def parseDouble(s: String) = try { Some(s.toDouble) } catch { case _ : Throwable => None }
+
+  
+  /*
+  def sourceToIter(filename: String):Iterator[Array[String]] = {
+    val bufferedSource = io.Source.fromFile(filename)
+    val iter = bufferedSource.getLines.drop(1).map(_.split(",").map(_.trim))
+    bufferedSource.close
+    return iter
+  }
+  */
+
+  def iterToDoubleList(iter:Iterator[Array[String]], i: Int):List[Double] = {
+    return iter.map(col => col(i)).map(v => v.toDouble).toList
+  }
+  
 
   val bufferedSource = io.Source.fromFile("./height-data.csv")
   val iter = bufferedSource.getLines().drop(1).map(_.split(",").map(_.trim))
 
   //val males = iter.map(col => parseDouble(col(0))).map(v => v.getOrElse(0)).toList
 
-  val males = iter.map(col => col(0)).map(v => v.toDouble).toList
-  val females = iter.map(col => col(1)).map(v => v.toDouble).toList
+  //val iter = sourceToIter("./height-data.csv")
+
+  //val males = iter.map(col => col(0)).map(v => v.toDouble).toList
+  //val females = iter.map(col => col(1)).map(v => v.toDouble).toList
+  //val males = iterToDoubleList(iter, 0)
+  val females = iterToDoubleList(iter, 1)
 
   //val females = iter.map(col => col(1)).map(v => v.toDouble).toList
+
+  //println(iter.getClass)
+  //println(females.getClass)
+
+  //print(males)
+  print(females)
 
   bufferedSource.close
 
 
+/*
   for (m <- males) {
     println(m)
   }
@@ -78,6 +126,7 @@ object Main extends App {
       println(f)
   } 
   */
+  
 
 
   // the females list is empty
@@ -98,4 +147,4 @@ object Main extends App {
   val ttest = new TTest(array1, array2)
   println(ttest.tTestResult)
   */
-//}
+}
