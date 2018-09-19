@@ -52,7 +52,7 @@ object CSVDemo extends App {
 
 object Main extends App {
 
-  def parseDouble(s: String) = try { Some(s.toDouble) } catch { case _ => None }
+  def parseDouble(s: String) = try { Some(s.toDouble) } catch { case _ : Throwable => None }
 
   val bufferedSource = io.Source.fromFile("./height-data.csv")
 
