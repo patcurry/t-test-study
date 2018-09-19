@@ -2,7 +2,6 @@ import scala.math.abs
 import scala.math.pow
 import scala.math.sqrt
 
-// why am I using sbt?
 // why not just use scala with a small scala script file?
 
 class TTest(val x: List[Double], val y: List[Double]) {
@@ -55,10 +54,12 @@ object Main extends App {
   def parseDouble(s: String) = try { Some(s.toDouble) } catch { case _ : Throwable => None }
 
   val bufferedSource = io.Source.fromFile("./height-data.csv")
-
   val iter = bufferedSource.getLines().drop(1).map(_.split(",").map(_.trim))
-  val males = iter.map(col => parseDouble(col(0))).map(v => v.getOrElse(0)).toList
-  val females = iter.map(col => col(1)).toList
+
+  //val males = iter.map(col => parseDouble(col(0))).map(v => v.getOrElse(0)).toList
+  val males = iter.map(col => col(0)).map(v => v.toDouble).toList
+  val females = iter.map(col => col(1)).map(v => v.toDouble).toList
+
   bufferedSource.close
 
 
