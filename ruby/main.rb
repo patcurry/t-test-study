@@ -22,9 +22,9 @@ end
 # looks like 'p' is shorthand for 'puts'
 
 class Calculator
-    def initialize(x, y)
-        @x = x
-        @y = y
+    def initialize(arr1, arr2)
+        @arr1 = arr1
+        @arr2 = arr2
     end
 
     def mean(arr)
@@ -36,6 +36,8 @@ class Calculator
     end
 
     def squareDiffs(arr)
+        arr.map( |a| (a - mean(arr)) * (a - mean(arr))))
+    end
 
 end
 
