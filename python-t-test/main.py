@@ -14,30 +14,25 @@ df = pd.read_csv('./height-data.csv', skipinitialspace=True)
 
 class TTest:
 
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+    def __init__(self, arr1, arr2):
+        self.arr1 = arr1
+        self.arr2 = arr2
 
-    def sum(self, a, b): 
-        return a + b
+    def sum(self, x, y): 
+        return y + x
 
-    def mean(self, a):
-        array_sum = reduce(self.sum, a)
-        result = array_sum/len(a)
-        return result
+    def mean(self, arr):
+        return reduce(self.sum, arr) / len(arr)
 
-
-    def sampleStdDevDenom(self, a):
+    def sampleStdDevDenom(self, arr):
         """
         basically the function above (mean) but instead
         of dividing by the length, we divide by the length
         minus 1
         """
-        array_sum = reduce(self.sum, a)
-        result = array_sum / (len(a) - 1)
-        return result
+        return reduce(self.sum, arr) / (len(arr) - 1)
 
-    def squareDiffs(self, d):
+    def squareDiffs(self, arr):
         """
         map the function a - b over the array d
         where a is the value in the array and b is
@@ -45,32 +40,32 @@ class TTest:
         of the difference between the value and
         the average
         """
-        return list(map(lambda a: (a - self.mean(d))**2, d))
+        return list(map(lambda a: (a - self.mean(arr))**2, arr))
 
 
-    def std_dev(self, d):
+    def std_dev(self, arr):
         """
         subtract each value in the sample from the sample mean
         then square the result
         take the sum of the results and divide it by the
         one less than the sample count 
         """
-        sd = self.squareDiffs(d)
+        sd = self.squareDiffs(arr)
         MSD = self.sampleStdDevDenom(sd)
         return sqrt(MSD)
 
 
-    def two_sample_t_test(self, a, b):
-        numerator = abs(self.mean(a) - self.mean(b))
-        a_denom = self.std_dev(a) / len(a)
-        b_denom = self.std_dev(b) / len(b)
+    def two_sample_t_test(self, arr1, arr2):
+        numerator = abs(self.mean(arr1) - self.mean(arr2))
+        a_denom = self.std_dev(arr1) / len(arr1)
+        b_denom = self.std_dev(arr2) / len(arr2)
         denominator = sqrt(a_denom + b_denom)
-        dof = len(a) + len(b) - 2
+        dof = len(arr1) + len(arr2) - 2
         t_score = numerator / denominator
         return {'T Score': t_score, 'dof': dof}
 
     def ttest_result(self):
-        return self.two_sample_t_test(self.x, self.y)
+        return self.two_sample_t_test(self.arr1, self.arr2)
 
 
 class_answer = TTest(df['male'], df['female'])
