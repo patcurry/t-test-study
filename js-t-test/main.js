@@ -1,7 +1,6 @@
 const fs = require('fs');
 const fcsv = require('fast-csv');
 
-// functions
 const mean = arr => arr.reduce((acc, curr) => acc + curr) / arr.length;
 
 const sampleStdDevDenom = arr => arr.reduce(
