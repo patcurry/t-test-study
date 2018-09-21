@@ -1,4 +1,5 @@
 # Crystal's syntax is remarkably similar to Ruby's
+require "csv"
 
 class TTest
     def initialize(arr1 : Array(Float32), arr2 : Array(Float32)) : Array(Float32)
@@ -43,12 +44,24 @@ class TTest
     end
 end
 
-Array1 = [1,2,3,4,5] of Float32
-Array2 = [3,4,5,6,7] of Float32
-
-ttest = TTest.new(Array1, Array2)
+#Array1 = [1,2,3,4,5] of Float32
+#Array2 = [3,4,5,6,7] of Float32
+#
+#ttest = TTest.new(Array1, Array2)
 
 #p ttest.add(1,2)
 #p ttest.standardDeviation(Array1)
 #p ttest.twoSampleTTest(Array1, Array2)
-p ttest.ttest_result
+#p ttest.ttest_result
+
+# I am out of my depth here.
+# I shoudl probably turn to ruby docs to figure this out hahaha
+
+df = File.open("./height-data.csv", mode="r")
+#csv = CSV.new(df, headers: true)
+#csv = CSV.parse(a)
+#csv.map{ |r| p r[1] }
+csv = CSV.parse(df)
+csv.map{
+    p csv[2][0]
+}
