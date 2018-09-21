@@ -2,15 +2,6 @@ from functools import reduce
 from math import sqrt
 import pandas as pd
 
-# get data with one column for male heights and one column for female heights
-# each with ten values
-df = pd.read_csv('./height-data.csv', skipinitialspace=True)
-
-# get a t score by subtracting the mean of the males and the mean of the females from each other
-# then divide by the pooled standard deviation times the square root of 1 over n of males plus 1 over
-# the n of females, being the number of points in each sample (in this case 10 for each)
-# where the pooled standard deviation is
-# t = absolute_value(male_mean - female_mean) / sqrt(std_dev_m/nm + std_dev_f/nf)
 
 class TTest:
 
@@ -42,7 +33,6 @@ class TTest:
         """
         return list(map(lambda a: (a - self.mean(arr))**2, arr))
 
-
     def std_dev(self, arr):
         """
         subtract each value in the sample from the sample mean
@@ -53,7 +43,6 @@ class TTest:
         sd = self.squareDiffs(arr)
         MSD = self.sampleStdDevDenom(sd)
         return sqrt(MSD)
-
 
     def two_sample_t_test(self, arr1, arr2):
         numerator = abs(self.mean(arr1) - self.mean(arr2))
@@ -67,6 +56,10 @@ class TTest:
     def ttest_result(self):
         return self.two_sample_t_test(self.arr1, self.arr2)
 
+# get data with one column for male heights and one column for female heights
+# each with ten values
+# pandas makes it nice to the the data
+df = pd.read_csv('./height-data.csv', skipinitialspace=True)
 
 class_answer = TTest(df['male'], df['female'])
 print(class_answer.ttest_result())
