@@ -1,14 +1,7 @@
-array1 = [1,2,3,4,5]
-array2 = [3,4,5,6,7]
+require 'csv'
 
-# m is the average of of array1
-# it looks like a reduce function
-"""
-m = array1.inject{ |sum, el| sum + el }.to_f / array1.size
-n = array2.inject{ |sum, el| sum + el }.to_f / array2.size
-"""
 
-class Calculator
+class TTest
     def initialize(arr1, arr2)
         @arr1 = arr1
         @arr2 = arr2
@@ -45,6 +38,28 @@ class Calculator
     end
 end
 
-calculator = Calculator.new(array1, array2)
-#p calculator.sum(array1)
-p calculator.tTestResult 
+# create two empty arrays for males and females
+males = Array.new
+females = Array.new
+
+# read the csv data into the arrays
+CSV.foreach('./height-data.csv', :headers => true, converters: :numeric) do |row|
+    males << row[0]
+    females << row[1]
+end
+
+# instantiate / initialize the ttest with the data from the csv file
+ttest = TTest.new(males, females)
+
+# print the result
+p ttest.tTestResult 
+
+
+# test the t-test
+# the answer should be {:"T Score"=>2.514866859365871, :dof=>8}
+#
+#array1 = [1,2,3,4,5]
+#array2 = [3,4,5,6,7]
+#
+#yeah = TTest.new(array1, array2)
+#p yeah.tTestResult
