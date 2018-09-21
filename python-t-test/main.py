@@ -16,16 +16,13 @@ class TTest:
 
     def __init__(self, arr1, arr2):
         self.arr1 = arr1
-        self.arr2 = arr2 
+        self.arr2 = arr2
 
-    def sum(self, a, b): 
-        return a + b
+    def sum(self, x, y): 
+        return y + x
 
     def mean(self, arr):
-        array_sum = reduce(self.sum, arr)
-        result = array_sum/len(arr)
-        return result
-
+        return reduce(self.sum, arr) / len(arr)
 
     def sampleStdDevDenom(self, arr):
         """
@@ -33,9 +30,7 @@ class TTest:
         of dividing by the length, we divide by the length
         minus 1
         """
-        array_sum = reduce(self.sum, arr)
-        result = array_sum / (len(arr) - 1)
-        return result
+        return reduce(self.sum, arr) / (len(arr) - 1)
 
     def squareDiffs(self, arr):
         """
