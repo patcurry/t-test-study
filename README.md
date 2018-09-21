@@ -24,7 +24,7 @@ Java
 
 Common Lisp
 
-Ruby
+Ruby - Really easy to use. I like the syntax a lot. I more or less wrote it the same as the python script, but the syntax actually seemed a little cleaner to me. Probably because I would rather rely on reduce and map methods than on for loops. I hate for loops.
 
 Golang
 
