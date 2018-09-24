@@ -30,10 +30,10 @@ float tTest(float arr1[], int n,
     float sd1 = standardDeviation(arr1, n);
     float sd2 = standardDeviation(arr2, m);
 
-    cout << mean1 << endl;
-    cout << mean2 << endl;
-    cout << sd1 << endl;
-    cout << sd2 << endl;
+    //cout << mean1 << endl;
+    //cout << mean2 << endl;
+    //cout << sd1 << endl;
+    //cout << sd2 << endl;
 
     // something is wrong here, this does not seem
     // to be returning a float
@@ -58,8 +58,8 @@ int main()
 
     float result = tTest(arr1, n, arr2, m);
     
-    //cout << "T Score: <THIS IS WRONG> " << tTest(arr1, n, arr2, m) << endl;
-    //cout << "dof: " << dof << endl;
+    cout << "T Score: <THIS IS WRONG> " << tTest(arr1, n, arr2, m) << endl;
+    cout << "dof: " << dof << endl;
     
     return 0;
 }
