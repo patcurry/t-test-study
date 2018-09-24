@@ -6,10 +6,10 @@ int populate(double array[], int number);
 void spit(double array1[], int number);
 int main()
 {
-    //string maleWeight; // can I make this an array to populate?
-    //string femaleWeight;
+    //double maleWeight[]; // can I make this an array to populate?
+    //double femaleWeight[];
 
-//    ifstream data("../height-data.csv");
+    ifstream data("../height-data.csv");
 
 
  //   string value;
