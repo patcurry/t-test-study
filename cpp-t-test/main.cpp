@@ -11,9 +11,9 @@ using namespace std;
 
 // prototype functions. why? I donno
 // should these be in a class?
-double mean(double arr[], int n);
-double standard_deviation(double arr[], int n);
-double t_test(double arr1[], int n, double arr2[], int m); // This is not giving me a result that make sense with the two test arrays
+float mean(float arr[], int n);
+float standard_deviation(float arr[], int n);
+float t_test(float arr1[], int n, float arr2[], int m); // This is not giving me a result that make sense with the two test arrays
 
 int main()
 {
@@ -22,8 +22,8 @@ int main()
     // I am just going to make two arrays that 
     // are the correct lengths for the csv file
     // first get the program working, then refactor
-    double male[10];
-    double female[10];
+    float male[10];
+    float female[10];
 
     string line;
     ifstream myfile("../height-data.csv");
@@ -47,60 +47,62 @@ int main()
             getline(iss, val, ',');
 
             if (col % 2 == 0) {
-                male[col] = atof(val.c_str());
-                cout << "m " << male[col] << endl;
+                //male[col] = stof(val.c_str());
+                male[col] = stof(val);
+                //cout << "m " << male[col] << endl;
             } else {
-                female[col] = atof(val.c_str());
-                cout << "f " << female[col] << endl;
+                //female[col] = stof(val.c_str());
+                female[col] = stof(val);
+                //cout << "f " << female[col] << endl;
             }
         }
     }
 
+    // something is really wrong here, this is printing out crazy numbers
+    for (int i=0; i < 10 ; i++){
+        cout << "m " << male[i] << endl;
+        cout << "f " << female[i] << endl;
+    }
 
-    //double arr1[] = { 10, 20, 30, 40, 50 };
-    //double arr2[] = { 1, 29, 46, 78, 99 };
 
-    //int n = sizeof(arr1) / sizeof(arr1[0]);
-    //int m = sizeof(arr2) / sizeof(arr2[0]);
     int n = sizeof(male) / sizeof(male[0]);
     int m = sizeof(female) / sizeof(female[0]);
 
     int dof = n + m - 2;
 
-    //double result = t_test(arr1, n, arr2, m);
-    double result = t_test(male, n, female, m);
+    float result = t_test(male, n, female, m);
 
     // return result
     cout << "T-Score: " << result << ", dof: " << dof << endl;
     return 0;
 }
 
-double mean(double arr[], int n)
+float mean(float arr[], int n)
 {
-    double sum = 0;
+    float sum = 0;
     for (int i = 0; i < n; i++)
         sum = sum + arr[i];
     return sum / n;
 }
 
-double standard_deviation(double arr[], int n)
+float standard_deviation(float arr[], int n)
 {
-    double sum = 0;
+    float sum = 0;
     for (int i = 0; i < n; i++)
         sum = sum + ((arr[i] - mean(arr, n)) * 
                      (arr[i] - mean(arr, n)));
     return sqrt(sum / (n - 1));
 }
 
-double t_test(double arr1[], int n,
-              double arr2[], int m)
+float t_test(float arr1[], int n,
+              float arr2[], int m)
 {
-    double mean1 = mean(arr1, n);
-    double mean2 = mean(arr2, m);
-    double sd1 = standard_deviation(arr1, n);
-    double sd2 = standard_deviation(arr2, m);
+    float mean1 = mean(arr1, n);
+    float mean2 = mean(arr2, m);
+    float sd1 = standard_deviation(arr1, n);
+    float sd2 = standard_deviation(arr2, m);
 
-    double result = (mean1 - mean2) / sqrt(((sd1 * sd1) / n) + ((sd2 * sd2) / m));
+    float result = (mean1 - mean2) / sqrt(((sd1 * sd1) / n) + ((sd2 * sd2) / m));
     return result;
 
 }
