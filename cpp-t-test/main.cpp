@@ -19,24 +19,15 @@ float t_test(vector <float> vec1, int n, vector <float> vec2, int m); // This is
 vector <float> male;
 vector <float> female;
 
-
-
 int main()
 {
-    // I would rather not do it this way, but
-    // because I know how large the csv file is
-    // I am just going to make two arrays that 
-    // are the correct lengths for the csv file
-    // first get the program working, then refactor
-    //float male[10];
-    //float female[10];
-
     string line;
     ifstream myfile("../height-data.csv");
 
     if (!myfile.is_open()) {
         cout << "Unable to open file" << endl;
     }
+
     // skip the first line
     getline(myfile, line);
 
@@ -46,28 +37,20 @@ int main()
 
         // loop through the columns (only 2 of them)
         // and put the data from the even column into
-        // the male array, and the values from the
-        // odd column into the female array
+        // the male vector, and the values from the
+        // odd column into the female vector 
         for (int col=0; col < 2; col++) {
             string val;
             getline(iss, val, ',');
 
             if (col % 2 == 0) {
-                //male[col] = stof(val.c_str());
-                //male[col] = stof(val);
-                //cout << "m " << male[col] << endl;
                 male.push_back(stof(val));
             } else {
-                //female[col] = stof(val.c_str());
-                //female[col] = stof(val);
-                //cout << "f " << female[col] << endl;
                 female.push_back(stof(val));
             }
         }
     }
 
-    //int n = sizeof(male) / sizeof(male[0]);
-    //int m = sizeof(female) / sizeof(female[0]);
     int n = male.size();
     int m = female.size();
 
@@ -80,6 +63,12 @@ int main()
     }
 
     cout << "how many male records? " << n << endl;
+    cout << "how many female records? " << m << endl;
+
+    cout << "male mean: " << mean(male, n) << endl;
+    cout << "male standard deviation: " << standard_deviation(male, n) << endl;
+    cout << "female mean: " << mean(female, n) << endl;
+    cout << "female standard deviation: " << standard_deviation(female, n) << endl;
 
     // return result
     cout << "T-Score: " << result << ", dof: " << dof << endl;
@@ -113,5 +102,4 @@ float t_test(vector <float> vec1, int n,
 
     float result = (mean1 - mean2) / sqrt(((sd1 * sd1) / n) + ((sd2 * sd2) / m));
     return result;
-
 }
