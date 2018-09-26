@@ -1,19 +1,25 @@
-
+// Do I need all of these?
 #include <iostream>
 #include <fstream>
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <sstream>
+#include <vector>
 using namespace std;
 
 // lifted the math from geeksforgeeks.com
 
-// prototype functions. why? I donno
+// prototype functions. why? I donno, imperative programming.
 // should these be in a class?
-float mean(float arr[], int n);
-float standard_deviation(float arr[], int n);
-float t_test(float arr1[], int n, float arr2[], int m); // This is not giving me a result that make sense with the two test arrays
+float mean(vector <float> vec, int n);
+float standard_deviation(vector <float> vec, int n);
+float t_test(vector <float> vec1, int n, vector <float> vec2, int m); // This is not giving me a result that make sense with the two test arrays
+
+vector <float> male;
+vector <float> female;
+
+
 
 int main()
 {
@@ -22,8 +28,8 @@ int main()
     // I am just going to make two arrays that 
     // are the correct lengths for the csv file
     // first get the program working, then refactor
-    float male[10];
-    float female[10];
+    //float male[10];
+    //float female[10];
 
     string line;
     ifstream myfile("../height-data.csv");
@@ -48,59 +54,62 @@ int main()
 
             if (col % 2 == 0) {
                 //male[col] = stof(val.c_str());
-                male[col] = stof(val);
+                //male[col] = stof(val);
                 //cout << "m " << male[col] << endl;
+                male.push_back(stof(val));
             } else {
                 //female[col] = stof(val.c_str());
-                female[col] = stof(val);
+                //female[col] = stof(val);
                 //cout << "f " << female[col] << endl;
+                female.push_back(stof(val));
             }
         }
     }
 
-    // something is really wrong here, this is printing out crazy numbers
-    for (int i=0; i < 10 ; i++){
-        cout << "m " << male[i] << endl;
-        cout << "f " << female[i] << endl;
-    }
-
-
-    int n = sizeof(male) / sizeof(male[0]);
-    int m = sizeof(female) / sizeof(female[0]);
+    //int n = sizeof(male) / sizeof(male[0]);
+    //int m = sizeof(female) / sizeof(female[0]);
+    int n = male.size();
+    int m = female.size();
 
     int dof = n + m - 2;
 
     float result = t_test(male, n, female, m);
+
+    for (int i = 0; i < 11; i++) {
+        cout << male[i] << endl;
+    }
+
+    cout << "how many male records? " << n << endl;
 
     // return result
     cout << "T-Score: " << result << ", dof: " << dof << endl;
     return 0;
 }
 
-float mean(float arr[], int n)
+float mean(vector <float> vec, int n)
 {
     float sum = 0;
     for (int i = 0; i < n; i++)
-        sum = sum + arr[i];
+        sum = sum + vec[i];
     return sum / n;
 }
 
-float standard_deviation(float arr[], int n)
+float standard_deviation(vector <float> vec, int n)
 {
     float sum = 0;
     for (int i = 0; i < n; i++)
-        sum = sum + ((arr[i] - mean(arr, n)) * 
-                     (arr[i] - mean(arr, n)));
+        sum = sum + ((vec[i] - mean(vec, n)) * 
+                     (vec[i] - mean(vec, n)));
     return sqrt(sum / (n - 1));
 }
 
-float t_test(float arr1[], int n,
-              float arr2[], int m)
+float t_test(vector <float> vec1, int n,
+              vector <float> vec2, int m)
 {
-    float mean1 = mean(arr1, n);
-    float mean2 = mean(arr2, m);
-    float sd1 = standard_deviation(arr1, n);
-    float sd2 = standard_deviation(arr2, m);
+    float mean1 = mean(vec1, n);
+    float mean2 = mean(vec2, m);
+    float sd1 = standard_deviation(vec1, n);
+    float sd2 = standard_deviation(vec2, m);
 
     float result = (mean1 - mean2) / sqrt(((sd1 * sd1) / n) + ((sd2 * sd2) / m));
     return result;
