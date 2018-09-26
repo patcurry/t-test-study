@@ -16,7 +16,7 @@ JavaScript - Easier to write math and functions than for python, but more diffic
 
 Scala - The math was easy to write and the functions were very terse, and putting it into a class was not particularly difficult. Getting csv data doesn't seem like it should be too hard, but I cannot make it past a certain point. I do not know what is holding everything back. It seems like a problem with the number of times an item can be looped over (doesn't make sense) or what type of value is returned from a method. Lots of problems, not easy.
 
-C++
+C++ - Finally got this to work. It was torture trying to get the correct values out of the csv file. I ultimately used a Vector instead of an Array, and I ended up having to rewrite the t-test function (which I should have done long before). I do not have any classes in here, and do not know how they would actually help anything. Major learning experience.
 
 C
 
