@@ -1,41 +1,52 @@
-/* start with program to get sum of elements in given array */
-/* How about we get the average of elements in given array */
-/*
+// Math lifted from geeks for geeks how to implement ttest with java
+import java.util.*;
+import java.io.*;
+
 class Test {
-    // is there an init method?
-    static double arr[] = {1, 2, 3.1, 4, 5};
-
-    // method
-    static double sum() {
+    // function to find mean
+    // I would rather use something like a reduce statement, but everyone
+    // loves for loops. Except me.
+    static double Mean(double arr[], int n) {
         double sum = 0;
-        int i;
-
-        for (i = 0; i < arr.length; i++)
-          sum += arr[i];
-
-        return sum;
+        for (int i = 0; i < n; i++) 
+            sum = sum + arr[i];
+        return sum / n;
     }
 
-    // method
-    static double mean() {
-        return sum() / arr.length;
-    } 
-
-    // Driver method
-    public static void main(String[] args) {
-        System.out.println("Sum of given array is " + sum());
-        System.out.println("Average of given array is " + mean());
+    // function to find standard deviation of given array
+    static double standardDeviation(double arr[], int n) {
+        double sum = 0;
+        for (int i = 0; i < n; i ++)
+            sum = sum + Math.pow(arr[i] - Mean(arr, n), 2);
+        return (double)Math.sqrt(sum / (n - 1));
     }
-}
-*/
 
-public class Test {
-    // actually it's a point
-    public int x = 0;
-    public int y = 0;
-    // constructor
-    public Test(int a, int b) {
-        x = a;
-        y = b;
+    // Function to find t-test of two sets of statistical data (arrays?)
+    static double tTest(double arr1[], int n, double arr2[], int m) {
+        double mean1 = Mean(arr1, n);
+        double mean2 = Mean(arr2, n);
+        double denom1 = standardDeviation(arr1, n) / n;
+        double denom2 = standardDeviation(arr2, m) / m;
+
+        double numerator = mean1 - mean2;
+        double denominator = Math.sqrt(denom1 + denom2);
+
+        double result = numerator / denominator;
+        return result;
+    }
+
+    static int dof(int n, int m) {
+        return n + m - 2;
+    }
+
+    // Driver code
+    public static void main(String args[]) {
+        double arr1[] = { 1, 2, 3, 4, 5 };
+        double arr2[] = { 3, 4, 5, 6, 7 };
+        int n = arr1.length;
+        int m = arr2.length;
+
+        System.out.println("T-Score: " + tTest(arr1, n, arr2, m));
+        System.out.println("dof: " + dof(n, m));
     }
 }
