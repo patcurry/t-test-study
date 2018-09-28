@@ -31,8 +31,7 @@ class Main {
         double numerator = mean1 - mean2;
         double denominator = Math.sqrt(denom1 + denom2);
 
-        double result = numerator / denominator;
-        return result;
+        return numerator / denominator;
     }
 
     static int dof(int n, int m) {

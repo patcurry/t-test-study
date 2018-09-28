@@ -1,52 +1,48 @@
-// Math lifted from geeks for geeks how to implement ttest with java
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
-import java.io.*;
 
-class Test {
-    // function to find mean
-    // I would rather use something like a reduce statement, but everyone
-    // loves for loops. Except me.
-    static double Mean(double arr[], int n) {
-        double sum = 0;
-        for (int i = 0; i < n; i++) 
-            sum = sum + arr[i];
-        return sum / n;
-    }
+public class Test {
 
-    // function to find standard deviation of given array
-    static double standardDeviation(double arr[], int n) {
-        double sum = 0;
-        for (int i = 0; i < n; i ++)
-            sum = sum + Math.pow(arr[i] - Mean(arr, n), 2);
-        return (double)Math.sqrt(sum / (n - 1));
-    }
+    public static void main(String[] args) {
+        String csvFile = "../height-data.csv";
+        BufferedReader br = null;
+        String line = "";
+        String csvsSplitBy = ",";
 
-    // Function to find t-test of two sets of statistical data (arrays?)
-    static double tTest(double arr1[], int n, double arr2[], int m) {
-        double mean1 = Mean(arr1, n);
-        double mean2 = Mean(arr2, n);
-        double denom1 = standardDeviation(arr1, n) / n;
-        double denom2 = standardDeviation(arr2, m) / m;
+        ArrayList<Double> males = new ArrayList<Double>();
+        ArrayList<Double> females = new ArrayList<Double>();
 
-        double numerator = mean1 - mean2;
-        double denominator = Math.sqrt(denom1 + denom2);
+        try {
+            br = new BufferedReader(new FileReader (csvFile));
+            br.readLine(); // skip headers
+            while ((line = br.readLine()) != null) {
+                // use comma as separator
+                String[] height = line.split(csvsSplitBy);
 
-        double result = numerator / denominator;
-        return result;
-    }
-
-    static int dof(int n, int m) {
-        return n + m - 2;
-    }
-
-    // Driver code
-    public static void main(String args[]) {
-        double arr1[] = { 1, 2, 3, 4, 5 };
-        double arr2[] = { 3, 4, 5, 6, 7 };
-        int n = arr1.length;
-        int m = arr2.length;
-
-        System.out.println("T-Score: " + tTest(arr1, n, arr2, m));
-        System.out.println("dof: " + dof(n, m));
+                //System.out.println(height[0]);
+                //System.out.println(height[1]);
+                double m = Double.parseDouble(height[0]);
+                double f = Double.parseDouble(height[1]);
+                males.add(m);
+                females.add(f);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    System.out.println("Males: " + males);
+                    System.out.println("Females: " + females);
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
