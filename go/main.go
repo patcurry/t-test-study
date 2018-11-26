@@ -6,7 +6,7 @@ import "math"
 
 func main() {
    // an int array with 5 elements
-   var  balance = []float64 {1000.1, 2, 3, 17, 50}
+   var  balance = []float64 {10.1, 20, 30, 17, 50}
    var avg float64
 
    // pass array as an argument
@@ -15,6 +15,7 @@ func main() {
 
    // output the returned value
    fmt.Printf( "Average value is: %f\n", avg )
+   fmt.Printf( "Standard Deviation is: %f\n", stdDev(balance))
    //for i=0; i < len(balance); i++; { fmt.Println(balance[i]) }
 }
 
@@ -35,10 +36,31 @@ func mean(arr []float64) float64 {
 func squareDiffs(arr []float64) []float64 {
     var result = make([]float64, len(arr))
 
-    for i:=0; i < len(arr); i ++ {
+    for i:=0; i < len(arr); i++ {
         result[i] = math.Pow((arr[i] - mean(arr)), 2)
     }
 
     return result
 }
+
+func sampleStdDevDenom(arr []float64) float64 {
+    var sum float64
+
+    // get sum of array
+    for i:=0; i < len(arr); i++ {
+        sum += arr[i]
+    }
+
+    return sum / float64(len(arr) - 1)
+}
+
+func stdDev(arr []float64) float64 {
+    return math.Sqrt(sampleStdDevDenom(squareDiffs(arr)))
+}
+
+
+
+
+
+
 
